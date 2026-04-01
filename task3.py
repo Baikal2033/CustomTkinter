@@ -1,16 +1,26 @@
 import customtkinter as ctk
 
 
-def handle_button_press(chosen_elem):
-    text = chosen_elem
+def handle_button_press():
+    global var_checkbox_1, var_checkbox_2
+    text = combobox.get()
+    color = var_radiobuttons.get()
+    if color == 1:
+        entry.configure(text_color="white")
+    if color == 2:
+        entry.configure(text_color="red")
+    if color == 3:
+        entry.configure(text_color="yellow")
+    if var_checkbox_1.get() == True:
+        text += "!"
+    if var_checkbox_2.get() == True:
+        text += "?"
+
     entry.configure(state="normal")  # разблокируем поле
     entry.delete(0, "end")  # удалим оттуда старую строчку
     entry.insert(0, text)  # вставим новую
     entry.configure(state="readonly")  # снова заблокируем
 
-def handle_combobox_choice(chosen_elem):  # хендлер для ComboBox должен принимать один аргумент - выбранный элемент
-    # он срабатывает, когда мы выбираем в выпадающем списке какой-то элемент
-    print(f"Выбранный элемент: {chosen_elem}")
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("green")
@@ -24,7 +34,8 @@ entry = ctk.CTkEntry(master=root)
 entry.configure(
     justify="center",
     font=my_font,
-    width=250
+    width=250,
+    text_color="white"
 )
 entry.insert(0, "")  # вставили в поле текст
 entry.configure(state="readonly")  # заблокировали поле
@@ -61,7 +72,6 @@ combobox.configure(
     width=250
 )
 combobox.set("Выберите фразу:")  # значение элемента по умолчанию
-combobox.configure(command=handle_combobox_choice)
 
 # взаимодействие с ComboBox:
 combobox.get()  # получить выбранное значение
@@ -78,7 +88,7 @@ checkbox_1 = ctk.CTkCheckBox(
 )
 checkbox_1.configure(text="Добавить в конец !", font=my_font)
 
-var_checkbox_1.set(True)  # значение переменной по умолчанию, то есть по умолчанию первый флажок будет активен
+var_checkbox_1.set(False)  # значение переменной по умолчанию, то есть по умолчанию первый флажок будет активен
 
 var_checkbox_2 = ctk.BooleanVar()  # второй флажок будет привязан ко второй переменной
 checkbox_2 = ctk.CTkCheckBox(master=root, variable=var_checkbox_2, onvalue=True, offvalue=False)
