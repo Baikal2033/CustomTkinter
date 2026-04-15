@@ -1,1 +1,1 @@
-Задания по CustomKinter
+Задания по CustomTkinter
